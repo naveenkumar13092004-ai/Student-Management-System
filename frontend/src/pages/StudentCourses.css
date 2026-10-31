@@ -1,0 +1,263 @@
+
+/* =====================================
+   STUDENT COURSES PAGE BACKGROUND
+===================================== */
+
+.student-courses-container {
+  min-height: 100vh;
+  width: 100%;
+  padding-bottom: 40px;
+  background: linear-gradient(
+    135deg,
+    #f5f3ff 0%,
+    #e9e5ff 50%,
+    #f8f7ff 100%
+  );
+}
+
+/* =====================================
+   STUDENT COURSES CONTENT
+===================================== */
+
+.student-courses-content {
+  width: 92%;
+  max-width: 1450px;
+  margin: 0 auto;
+  padding: 35px 0;
+}
+
+/* =====================================
+   PAGE HEADER
+===================================== */
+
+.student-courses-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.student-courses-eyebrow {
+  color: #6254d9;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+
+.student-courses-header h1 {
+  color: #29234f;
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0 0 10px;
+}
+
+.student-courses-subtitle {
+  color: #77758e;
+  font-size: 15px;
+  margin: 0;
+}
+
+/* =====================================
+   COURSE CARD
+===================================== */
+
+.student-courses-card {
+  background: #ffffff;
+  padding: 28px 25px;
+  border-radius: 18px;
+  box-shadow: 0 8px 25px rgba(40, 30, 90, 0.08);
+}
+
+/* =====================================
+   CARD HEADING
+===================================== */
+
+.student-courses-card-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.student-courses-card-heading h2 {
+  color: #29234f;
+  font-size: 22px;
+  margin: 0 0 7px;
+}
+
+.student-courses-card-heading p {
+  color: #88869a;
+  font-size: 14px;
+  margin: 0;
+}
+
+.course-count {
+  background: #eeeaff;
+  color: #6254d9;
+  padding: 9px 15px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* =====================================
+   COURSE TABLE
+===================================== */
+
+.student-course-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.student-course-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 750px;
+}
+
+.student-course-table thead {
+  background: #f0edff;
+}
+
+.student-course-table th {
+  color: #6254d9;
+  padding: 16px 14px;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.student-course-table td {
+  color: #514d68;
+  padding: 17px 14px;
+  font-size: 14px;
+  border-bottom: 1px solid #eeeaf8;
+}
+
+.student-course-table tbody tr {
+  transition: background 0.2s ease;
+}
+
+.student-course-table tbody tr:hover {
+  background: #f8f7ff;
+}
+
+.student-course-table .course-name {
+  color: #29234f;
+  font-weight: 600;
+}
+
+.student-course-table .course-fees {
+  color: #6254d9;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.student-course-table .no-courses {
+  text-align: center;
+  padding: 35px;
+  color: #88869a;
+}
+
+/* =====================================
+   LOADING
+===================================== */
+
+.course-loading {
+  padding: 35px;
+  text-align: center;
+  color: #6254d9;
+  font-weight: 500;
+}
+
+/* =====================================
+   ERROR MESSAGE
+===================================== */
+
+.student-courses-container .course-error {
+  padding: 13px 16px;
+  margin-bottom: 18px;
+  background: #fff0f0;
+  border: 1px solid #ffd0d0;
+  border-radius: 8px;
+  color: #d93025;
+  font-size: 14px;
+}
+
+/* =====================================
+   BACK TO DASHBOARD BUTTON
+   POSITION: BOTTOM CENTER
+===================================== */
+
+.back-dashboard-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  padding-bottom: 20px;
+}
+
+.back-dashboard-btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 26px;
+  background: linear-gradient(
+    135deg,
+    #7865ff,
+    #6254d9
+  );
+  color: #ffffff;
+  border: none;
+  border-radius: 9px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.back-dashboard-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 16px rgba(98, 84, 217, 0.25);
+}
+
+.back-dashboard-btn:active {
+  transform: translateY(0);
+}
+
+/* =====================================
+   RESPONSIVE DESIGN
+===================================== */
+
+@media (max-width: 768px) {
+  .student-courses-content {
+    width: 94%;
+    padding: 25px 0;
+  }
+
+  .student-courses-header h1 {
+    font-size: 25px;
+  }
+
+  .student-courses-card {
+    padding: 18px 14px;
+  }
+
+  .student-courses-card-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .student-course-table {
+    min-width: 700px;
+  }
+
+  .back-dashboard-container {
+    margin-top: 22px;
+  }
+}

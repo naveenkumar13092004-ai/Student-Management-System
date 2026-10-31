@@ -1,0 +1,457 @@
+/* =====================================
+   1. RESET
+===================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  min-height: 100vh;
+}
+
+/* =====================================
+   2. PAGE BACKGROUND
+===================================== */
+
+.student-register-page {
+  width: 100%;
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 25px 15px;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* =====================================
+   3. REGISTER CARD
+===================================== */
+
+.student-register-card {
+  width: 100%;
+  max-width: 680px;
+
+  padding: 25px 30px 22px;
+
+  background: rgba(255, 255, 255, 0.97);
+
+  border-radius: 23px;
+
+  box-shadow: 0 20px 60px rgba(20, 10, 60, 0.25);
+}
+
+/* =====================================
+   4. REGISTER ICON
+===================================== */
+
+.register-icon {
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin: 0 auto 8px;
+
+  background: #eeeaff;
+  border-radius: 14px;
+
+  font-size: 24px;
+}
+
+/* =====================================
+   5. HEADER
+===================================== */
+
+.register-heading {
+  text-align: center;
+  margin-bottom: 19px;
+}
+
+.register-eyebrow {
+  color: #7055e8;
+
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+
+  margin-bottom: 7px;
+}
+
+.register-heading h1 {
+  color: #292453;
+
+  font-size: 23px;
+  font-weight: 800;
+
+  margin-bottom: 7px;
+}
+
+.register-heading p:last-child {
+  color: #89859f;
+  font-size: 12px;
+}
+
+/* =====================================
+   6. FORM GRID
+===================================== */
+
+.register-form-grid {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  column-gap: 15px;
+  row-gap: 10px;
+}
+
+/* =====================================
+   7. FORM FIELDS
+===================================== */
+
+.register-field {
+  display: flex;
+  flex-direction: column;
+
+  gap: 6px;
+  min-width: 0;
+}
+
+.register-field.full-width {
+  grid-column: 1 / -1;
+}
+
+.register-field label {
+  color: #403b5b;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.register-field label span {
+  color: #e74c3c;
+}
+
+/* INPUT, SELECT AND TEXTAREA */
+
+.register-field input,
+.register-field select,
+.register-field textarea {
+  width: 100%;
+  min-width: 0;
+
+  padding: 10px 12px;
+
+  border: 1px solid #dedbea;
+  border-radius: 9px;
+
+  outline: none;
+
+  background: #ffffff;
+  color: #302b55;
+
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+
+  transition: all 0.25s ease;
+}
+
+.register-field input,
+.register-field select {
+  height: 37px;
+}
+
+.register-field textarea {
+  min-height: 49px;
+  resize: vertical;
+}
+
+.register-field input::placeholder,
+.register-field textarea::placeholder {
+  color: #aaa6b8;
+}
+
+/* INPUT FOCUS */
+
+.register-field input:focus,
+.register-field select:focus,
+.register-field textarea:focus {
+  border-color: #7055e8;
+
+  box-shadow: 0 0 0 3px rgba(112, 85, 232, 0.10);
+}
+
+.register-field select {
+  cursor: pointer;
+}
+
+/* =====================================
+   8. PASSWORD WRAPPER
+===================================== */
+
+.register-password-wrapper {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  height: 37px;
+
+  border: 1px solid #dedbea;
+  border-radius: 9px;
+
+  overflow: hidden;
+
+  transition: all 0.25s ease;
+}
+
+.register-password-wrapper:focus-within {
+  border-color: #7055e8;
+
+  box-shadow: 0 0 0 3px rgba(112, 85, 232, 0.10);
+}
+
+.register-password-wrapper input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+
+  padding: 0 11px;
+
+  border: none;
+  border-radius: 0;
+
+  box-shadow: none !important;
+}
+
+.register-password-wrapper input:focus {
+  border: none;
+  outline: none;
+}
+
+.register-password-wrapper button {
+  height: 100%;
+
+  padding: 0 11px;
+
+  border: none;
+  background: #ffffff;
+
+  color: #7055e8;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.register-password-wrapper button:hover {
+  color: #4931b5;
+}
+
+/* =====================================
+   9. REGISTER BUTTON
+===================================== */
+
+.register-submit-btn {
+  width: 100%;
+  height: 40px;
+
+  margin-top: 15px;
+
+  border: none;
+  border-radius: 9px;
+
+  background: linear-gradient(
+    135deg,
+    #8068ef,
+    #5741c9
+  );
+
+  color: #ffffff;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+.register-submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+
+  box-shadow: 0 8px 20px rgba(87, 65, 201, 0.25);
+}
+
+.register-submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* =====================================
+   10. ERROR MESSAGE
+===================================== */
+
+.register-error {
+  padding: 10px 12px;
+  margin-bottom: 13px;
+
+  border-radius: 8px;
+
+  background: #fff0f0;
+  border: 1px solid #ffd4d4;
+
+  color: #c62828;
+  font-size: 12px;
+}
+
+/* =====================================
+   11. SUCCESS MESSAGE
+===================================== */
+
+.register-success {
+  padding: 10px 12px;
+  margin-bottom: 13px;
+
+  border-radius: 8px;
+
+  background: #edfff3;
+  border: 1px solid #c9efd5;
+
+  color: #18743d;
+  font-size: 12px;
+}
+
+/* =====================================
+   12. LOGIN LINK
+===================================== */
+
+.register-login-link {
+  margin-top: 13px;
+
+  text-align: center;
+
+  color: #89859f;
+  font-size: 12px;
+}
+
+.register-login-link a {
+  color: #7055e8;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  text-decoration: none;
+}
+
+.register-login-link a:hover {
+  text-decoration: underline;
+}
+
+/* =====================================
+   13. SHORT SCREEN
+===================================== */
+
+@media (max-height: 760px) and (min-width: 601px) {
+  .student-register-page {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  .student-register-card {
+    padding-top: 17px;
+    padding-bottom: 16px;
+  }
+
+  .register-heading {
+    margin-bottom: 13px;
+  }
+
+  .register-icon {
+    width: 40px;
+    height: 40px;
+
+    font-size: 22px;
+    margin-bottom: 6px;
+  }
+
+  .register-heading h1 {
+    font-size: 21px;
+  }
+
+  .register-form-grid {
+    row-gap: 8px;
+  }
+
+  .register-field input,
+  .register-field select,
+  .register-password-wrapper {
+    height: 35px;
+  }
+
+  .register-field textarea {
+    min-height: 42px;
+  }
+
+  .register-submit-btn {
+    height: 38px;
+    margin-top: 10px;
+  }
+
+  .register-login-link {
+    margin-top: 9px;
+  }
+}
+
+/* =====================================
+   14. MOBILE RESPONSIVE
+===================================== */
+
+@media (max-width: 600px) {
+  .student-register-page {
+    align-items: flex-start;
+
+    padding: 20px 12px;
+
+    background-attachment: scroll;
+  }
+
+  .student-register-card {
+    max-width: 430px;
+
+    padding: 23px 19px;
+
+    border-radius: 18px;
+  }
+
+  .register-heading h1 {
+    font-size: 21px;
+  }
+
+  .register-form-grid {
+    grid-template-columns: 1fr;
+    row-gap: 13px;
+  }
+
+  .register-field.full-width {
+    grid-column: auto;
+  }
+}

@@ -1,0 +1,307 @@
+
+/* =================================
+   MAIN REGISTER PAGE
+================================= */
+
+.register-page {
+  min-height: 100vh;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 15px;
+  box-sizing: border-box;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
+  position: relative;
+
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* =================================
+   BACKGROUND OVERLAY
+================================= */
+
+.register-overlay {
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    135deg,
+    rgba(20, 20, 55, 0.65),
+    rgba(53, 43, 120, 0.42)
+  );
+}
+
+/* =================================
+   SMALL REGISTER CARD
+================================= */
+
+.register-card {
+  position: relative;
+  z-index: 1;
+
+  width: 90%;
+  max-width: 360px;
+
+  padding: 22px 25px;
+
+  box-sizing: border-box;
+
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 15px;
+
+  background: rgba(255, 255, 255, 0.94);
+
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.22);
+
+  backdrop-filter: blur(12px);
+}
+
+/* =================================
+   REGISTER HEADING
+================================= */
+
+.register-heading {
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+.register-icon {
+  width: 45px;
+  height: 45px;
+
+  display: grid;
+  place-items: center;
+
+  margin: 0 auto 10px;
+
+  border-radius: 13px;
+
+  background: #eeedff;
+
+  font-size: 23px;
+}
+
+.register-heading h1 {
+  margin: 0 0 6px;
+
+  color: #292653;
+
+  font-size: 21px;
+  font-weight: 750;
+}
+
+.register-heading p {
+  margin: 0;
+
+  color: #85859a;
+
+  font-size: 12px;
+}
+
+/* =================================
+   INPUT GROUP
+================================= */
+
+.register-input-group {
+  display: flex;
+  flex-direction: column;
+
+  gap: 6px;
+
+  margin-bottom: 12px;
+}
+
+.register-input-group label {
+  color: #34334e;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.register-input-group input {
+  width: 100%;
+
+  padding: 10px 12px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #dedee9;
+  border-radius: 7px;
+
+  outline: none;
+
+  background: #ffffff;
+
+  color: #333333;
+
+  font-size: 13px;
+
+  transition: all 0.3s ease;
+}
+
+.register-input-group input::placeholder {
+  color: #aaaabb;
+}
+
+.register-input-group input:focus {
+  border-color: #635bdb;
+
+  box-shadow: 0 0 0 3px rgba(99, 91, 219, 0.13);
+}
+
+/* =================================
+   REGISTER BUTTON
+================================= */
+
+.register-button {
+  width: 100%;
+
+  padding: 11px;
+
+  margin-top: 4px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: linear-gradient(
+    135deg,
+    #635bdb,
+    #4940b7
+  );
+
+  color: #ffffff;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+.register-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+
+  box-shadow: 0 10px 22px rgba(79, 70, 229, 0.25);
+}
+
+.register-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* =================================
+   ERROR MESSAGE
+================================= */
+
+.register-error {
+  padding: 9px 11px;
+
+  margin-bottom: 12px;
+
+  border-radius: 7px;
+
+  background: #fff0f0;
+
+  color: #c62828;
+
+  font-size: 12px;
+}
+
+/* =================================
+   SUCCESS MESSAGE
+================================= */
+
+.register-success {
+  padding: 9px 11px;
+
+  margin-bottom: 12px;
+
+  border-radius: 7px;
+
+  background: #eaf8ef;
+
+  color: #247a43;
+
+  font-size: 12px;
+}
+
+/* =================================
+   REGISTER FOOTER
+================================= */
+
+.register-footer {
+  margin-top: 15px;
+
+  color: #777777;
+
+  font-size: 11px;
+
+  text-align: center;
+}
+
+.register-footer a {
+  color: #635bdb;
+
+  font-weight: 700;
+
+  text-decoration: none;
+}
+
+.register-footer a:hover {
+  text-decoration: underline;
+}
+
+/* =================================
+   BACK TO HOME
+================================= */
+
+.register-back-link {
+  display: block;
+
+  margin-top: 13px;
+
+  color: #635bdb;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  text-align: center;
+
+  text-decoration: none;
+}
+
+.register-back-link:hover {
+  text-decoration: underline;
+}
+
+/* =================================
+   RESPONSIVE DESIGN
+================================= */
+
+@media (max-width: 480px) {
+
+  .register-page {
+    padding: 12px;
+    background-attachment: scroll;
+  }
+
+  .register-card {
+    width: 100%;
+    max-width: 340px;
+    padding: 20px;
+  }
+
+  .register-heading h1 {
+    font-size: 20px;
+  }
+
+}

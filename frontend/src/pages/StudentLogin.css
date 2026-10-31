@@ -1,0 +1,348 @@
+
+/* =================================
+   MAIN STUDENT LOGIN PAGE
+================================= */
+
+.student-auth-page {
+  min-height: 100vh;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 20px;
+  box-sizing: border-box;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
+  position: relative;
+
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* =================================
+   BACKGROUND OVERLAY
+================================= */
+
+.student-auth-overlay {
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    135deg,
+    rgba(20, 20, 55, 0.65),
+    rgba(53, 43, 120, 0.42)
+  );
+}
+
+/* =================================
+   LOGIN CARD
+================================= */
+
+.student-auth-card {
+  position: relative;
+  z-index: 1;
+
+  width: 100%;
+  max-width: 430px;
+
+  padding: 35px;
+
+  box-sizing: border-box;
+
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.95);
+
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.22);
+
+  backdrop-filter: blur(12px);
+}
+
+/* =================================
+   LOGIN HEADING
+================================= */
+
+.student-auth-heading {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.student-auth-icon {
+  width: 65px;
+  height: 65px;
+
+  display: grid;
+  place-items: center;
+
+  margin: 0 auto 15px;
+
+  border-radius: 17px;
+
+  background: #eeedff;
+
+  font-size: 35px;
+}
+
+.student-auth-brand {
+  margin: 0 0 12px;
+
+  color: #635bdb;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  letter-spacing: 1.5px;
+}
+
+.student-auth-heading h1 {
+  margin: 10px 0 8px;
+
+  color: #25234f;
+
+  font-size: 32px;
+  font-weight: 800;
+}
+
+.student-auth-subtitle {
+  margin: 0;
+
+  color: #85859a;
+
+  font-size: 15px;
+}
+
+/* =================================
+   INPUT GROUP
+================================= */
+
+.student-auth-input-group {
+  display: flex;
+  flex-direction: column;
+
+  gap: 9px;
+
+  margin-bottom: 22px;
+}
+
+.student-auth-input-group label {
+  color: #34334e;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.student-auth-input-group input {
+  width: 100%;
+
+  padding: 15px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #dedee9;
+  border-radius: 12px;
+
+  outline: none;
+
+  background: #ffffff;
+
+  color: #333333;
+
+  font-size: 14px;
+
+  transition: all 0.3s ease;
+}
+
+.student-auth-input-group input::placeholder {
+  color: #aaaabb;
+}
+
+.student-auth-input-group input:focus {
+  border-color: #7654ee;
+
+  box-shadow: 0 0 0 3px rgba(118, 84, 238, 0.12);
+}
+
+/* =================================
+   PASSWORD WRAPPER
+================================= */
+
+.student-auth-password-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.student-auth-password-wrapper input {
+  padding-right: 70px;
+}
+
+/* =================================
+   SHOW PASSWORD BUTTON
+================================= */
+
+.student-auth-password-toggle {
+  position: absolute;
+
+  right: 12px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  border: none;
+
+  background: transparent;
+
+  color: #7654ee;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+/* =================================
+   LOGIN BUTTON
+================================= */
+
+.student-auth-button {
+  width: 100%;
+
+  padding: 16px;
+
+  margin-top: 8px;
+
+  border: none;
+  border-radius: 12px;
+
+  background: linear-gradient(
+    135deg,
+    #985cf5,
+    #542de3
+  );
+
+  color: #ffffff;
+
+  font-size: 15px;
+  font-weight: 750;
+
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+.student-auth-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+
+  box-shadow: 0 10px 25px rgba(84, 45, 227, 0.25);
+}
+
+.student-auth-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* =================================
+   ERROR MESSAGE
+================================= */
+
+.student-auth-error {
+  padding: 13px;
+
+  margin-bottom: 20px;
+
+  border-radius: 10px;
+
+  background: #fff0f0;
+
+  color: #dc3030;
+
+  font-size: 13px;
+
+  text-align: center;
+
+  overflow-wrap: anywhere;
+}
+
+/* =================================
+   REGISTER FOOTER
+================================= */
+
+.student-auth-footer {
+  margin-top: 27px;
+
+  text-align: center;
+
+  color: #85859a;
+
+  font-size: 14px;
+}
+
+.student-auth-footer a {
+  color: #7045e9;
+
+  font-weight: 750;
+
+  text-decoration: none;
+}
+
+.student-auth-footer a:hover {
+  text-decoration: underline;
+}
+
+/* =================================
+   BACK TO HOME
+================================= */
+
+.student-auth-back-link {
+  display: block;
+
+  margin-top: 22px;
+
+  text-align: center;
+
+  color: #7045e9;
+
+  font-size: 14px;
+  font-weight: 750;
+
+  text-decoration: none;
+}
+
+.student-auth-back-link:hover {
+  text-decoration: underline;
+}
+
+/* =================================
+   RESPONSIVE DESIGN
+================================= */
+
+@media (max-width: 480px) {
+
+  .student-auth-page {
+    padding: 12px;
+    background-attachment: scroll;
+  }
+
+  .student-auth-card {
+    padding: 25px 20px;
+    max-width: 360px;
+  }
+
+  .student-auth-heading h1 {
+    font-size: 27px;
+  }
+
+  .student-auth-input-group input {
+    padding: 13px;
+  }
+
+  .student-auth-button {
+    padding: 14px;
+  }
+
+}

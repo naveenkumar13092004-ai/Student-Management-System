@@ -2,9 +2,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import apiRequest from "../services/api";
 import "./Dashboard.css";
-
-const API_URL = "http://localhost:5000";
 
 function Dashboard() {
   const [students, setStudents] = useState([]);
@@ -28,6 +27,8 @@ function Dashboard() {
 
   // FETCH STUDENTS AND COURSES
   useEffect(() => {
+    let isMounted = true;
+
     const fetchDashboardData = async () => {
       try {
         setLoading(true);
@@ -41,53 +42,46 @@ function Dashboard() {
           );
         }
 
-        const headers = {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        };
-
-        const [studentResponse, courseResponse] =
-          await Promise.all([
-            fetch(`${API_URL}/students`, { headers }),
-            fetch(`${API_URL}/courses`, { headers }),
-          ]);
-
-        const studentData = await studentResponse.json();
-        const courseData = await courseResponse.json();
-
-        if (!studentResponse.ok) {
-          throw new Error(
-            studentData.message || "Unable to load students"
-          );
-        }
-
-        if (!courseResponse.ok) {
-          throw new Error(
-            courseData.message || "Unable to load courses"
-          );
-        }
+        const [studentData, courseData] = await Promise.all([
+          apiRequest("/students", {}, token),
+          apiRequest("/courses", {}, token)
+        ]);
 
         const studentList = getList(studentData, "students");
         const courseList = getList(courseData, "courses");
 
-        setStudents(studentList);
-        setCourses(courseList);
+        if (isMounted) {
+          setStudents(studentList);
+          setCourses(courseList);
+        }
 
       } catch (err) {
-        setError(err.message || "Unable to load dashboard");
+        console.error("Dashboard Error:", err);
+
+        if (isMounted) {
+          setError(
+            err.message || "Unable to load dashboard."
+          );
+        }
       } finally {
-        setLoading(false);
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     };
 
     fetchDashboardData();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   // DATE
   const currentDate = new Date().toLocaleDateString("en-IN", {
     day: "numeric",
     month: "short",
-    year: "numeric",
+    year: "numeric"
   });
 
   // GET COURSE NAME
@@ -96,12 +90,10 @@ function Dashboard() {
       return "Not assigned";
     }
 
-    // If course is an object
     if (typeof course === "object") {
       return course.name || "Not assigned";
     }
 
-    // If course is a MongoDB ObjectId
     const foundCourse = courses.find(
       (item) => String(item._id) === String(course)
     );
@@ -110,7 +102,6 @@ function Dashboard() {
       return foundCourse.name;
     }
 
-    // If course is already stored as text
     return course;
   };
 
@@ -303,7 +294,6 @@ function Dashboard() {
                   recentStudents.map((student) => (
                     <tr key={student._id}>
 
-                      {/* STUDENT NAME */}
                       <td>
                         <div className="dashboard-student-name">
                           <div className="dashboard-student-avatar">
@@ -318,19 +308,16 @@ function Dashboard() {
                         </div>
                       </td>
 
-                      {/* STUDENT ID */}
                       <td>
                         {student.Id ||
                           student.studentId ||
                           "Not assigned"}
                       </td>
 
-                      {/* EMAIL */}
                       <td>
                         {student.email || "—"}
                       </td>
 
-                      {/* COURSE */}
                       <td>
                         <span className="dashboard-course-badge">
                           {getCourseName(student.course)}

@@ -1,8 +1,11 @@
-
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import "./StudentDashboard.css";
+
+const API_URL =
+  process.env.REACT_APP_API_URL ||
+  "https://student-management-system-hgsn.onrender.com";
 
 function StudentDashboard() {
   const navigate = useNavigate();
@@ -45,7 +48,7 @@ function StudentDashboard() {
 
       try {
         const response = await fetch(
-          "http://localhost:5000/students/profile",
+          `${API_URL}/students/profile`,
           {
             method: "GET",
             headers: {
@@ -54,7 +57,13 @@ function StudentDashboard() {
           }
         );
 
-        const data = await response.json();
+        let data = {};
+
+        try {
+          data = await response.json();
+        } catch {
+          data = {};
+        }
 
         if (!response.ok) {
           throw new Error(
@@ -169,7 +178,7 @@ function StudentDashboard() {
       setMessage("");
 
       const response = await fetch(
-        "http://localhost:5000/students/profile",
+        `${API_URL}/students/profile`,
         {
           method: "PUT",
           headers: {
@@ -180,7 +189,13 @@ function StudentDashboard() {
         }
       );
 
-      const data = await response.json();
+      let data = {};
+
+      try {
+        data = await response.json();
+      } catch {
+        data = {};
+      }
 
       if (!response.ok) {
         throw new Error(

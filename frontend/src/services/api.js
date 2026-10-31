@@ -1,5 +1,7 @@
 
-const API_URL = "http://localhost:5000";
+const API_URL =
+  process.env.REACT_APP_API_URL ||
+  "https://student-management-system-hgsn.onrender.com";
 
 async function apiRequest(path, options = {}, token = null) {
   const headers = {
@@ -16,7 +18,13 @@ async function apiRequest(path, options = {}, token = null) {
     headers
   });
 
-  const data = await response.json();
+  let data = {};
+
+  try {
+    data = await response.json();
+  } catch {
+    data = {};
+  }
 
   if (!response.ok) {
     throw new Error(data.message || "Something went wrong");

@@ -4,6 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 import campusBackground from "../assets/campus-background.png";
 import "./AdminRegister.css";
 
+const API_BASE_URL =
+  process.env.REACT_APP_API_URL ||
+  "https://student-management-system-hgsn.onrender.com";
+
 function Register() {
   const navigate = useNavigate();
 
@@ -18,7 +22,6 @@ function Register() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -28,7 +31,6 @@ function Register() {
     }));
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -59,7 +61,7 @@ function Register() {
       setLoading(true);
 
       const response = await fetch(
-        "http://localhost:5000/admin/register",
+        `${API_BASE_URL.replace(/\/+$/, "")}/admin/register`,
         {
           method: "POST",
           headers: {
@@ -73,7 +75,13 @@ function Register() {
         }
       );
 
-      const data = await response.json();
+      let data = {};
+
+      try {
+        data = await response.json();
+      } catch {
+        data = {};
+      }
 
       if (!response.ok) {
         throw new Error(
@@ -95,7 +103,7 @@ function Register() {
       }, 1200);
 
     } catch (err) {
-      setError(err.message);
+      setError(err.message || "Unable to connect to the server.");
     } finally {
       setLoading(false);
     }
@@ -108,16 +116,11 @@ function Register() {
         backgroundImage: `url(${campusBackground})`
       }}
     >
-
-      {/* Background overlay */}
       <div className="register-overlay"></div>
 
-      {/* Registration card */}
       <div className="register-card">
 
-        {/* Heading */}
         <div className="register-heading">
-
           <div className="register-icon">
             🎓
           </div>
@@ -125,24 +128,20 @@ function Register() {
           <h1>Admin Registration</h1>
 
           <p>Create your administrator account</p>
-
         </div>
 
-        {/* Error message */}
         {error && (
           <div className="register-error">
             {error}
           </div>
         )}
 
-        {/* Success message */}
         {success && (
           <div className="register-success">
             {success}
           </div>
         )}
 
-        {/* Registration form */}
         <form onSubmit={handleSubmit}>
 
           <div className="register-input-group">
@@ -199,7 +198,6 @@ function Register() {
             />
           </div>
 
-          {/* Register button */}
           <button
             type="submit"
             className="register-button"
@@ -210,7 +208,6 @@ function Register() {
 
         </form>
 
-        {/* Login link */}
         <div className="register-footer">
           Already have an account?
           {" "}
@@ -219,7 +216,6 @@ function Register() {
           </Link>
         </div>
 
-        {/* Home link */}
         <Link
           to="/"
           className="register-back-link"
@@ -228,7 +224,6 @@ function Register() {
         </Link>
 
       </div>
-
     </div>
   );
 }

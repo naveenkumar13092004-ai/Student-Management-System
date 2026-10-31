@@ -3,6 +3,10 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./MainLogin.css";
 
+const API_URL =
+  process.env.REACT_APP_API_URL ||
+  "https://student-management-system-hgsn.onrender.com";
+
 function MainLogin() {
   const navigate = useNavigate();
 
@@ -34,8 +38,8 @@ function MainLogin() {
 
     const apiUrl =
       loginType === "admin"
-        ? "http://localhost:5000/admin/login"
-        : "http://localhost:5000/students/login";
+        ? `${API_URL}/admin/login`
+        : `${API_URL}/students/login`;
 
     try {
       setLoading(true);
@@ -51,7 +55,13 @@ function MainLogin() {
         })
       });
 
-      const data = await response.json();
+      let data = {};
+
+      try {
+        data = await response.json();
+      } catch {
+        data = {};
+      }
 
       if (!response.ok) {
         throw new Error(data.message || "Login failed.");
@@ -90,7 +100,9 @@ function MainLogin() {
       }
 
     } catch (err) {
-      setError(err.message || "Unable to login.");
+      setError(
+        err.message || "Unable to connect to the server."
+      );
     } finally {
       setLoading(false);
     }
@@ -125,7 +137,6 @@ function MainLogin() {
       <div className="main-login-card">
 
         {/* LOGO */}
-
         <div className="main-login-header">
 
           <div className="main-login-logo">
@@ -139,7 +150,6 @@ function MainLogin() {
         </div>
 
         {/* ADMIN AND STUDENT BUTTONS */}
-
         <div className="login-type-selection">
 
           <button
@@ -169,7 +179,6 @@ function MainLogin() {
         </div>
 
         {/* LOGIN HEADING */}
-
         <div className="main-login-form-heading">
 
           <h2>
@@ -187,7 +196,6 @@ function MainLogin() {
         </div>
 
         {/* ERROR MESSAGE */}
-
         {error && (
           <div className="main-login-error">
             {error}
@@ -195,11 +203,9 @@ function MainLogin() {
         )}
 
         {/* LOGIN FORM */}
-
         <form onSubmit={handleLogin}>
 
           {/* EMAIL */}
-
           <div className="main-login-field">
 
             <label htmlFor="login-email">
@@ -219,7 +225,6 @@ function MainLogin() {
           </div>
 
           {/* PASSWORD */}
-
           <div className="main-login-field">
 
             <label htmlFor="login-password">
@@ -251,7 +256,6 @@ function MainLogin() {
           </div>
 
           {/* LOGIN BUTTON */}
-
           <button
             type="submit"
             className="main-login-submit"
@@ -267,7 +271,6 @@ function MainLogin() {
         </form>
 
         {/* REGISTER LINK */}
-
         <div className="main-login-register">
 
           {loginType === "admin" ? (

@@ -1,8 +1,12 @@
-
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import campusBackground from "../assets/campus-background.png";
 import "./StudentLogin.css";
+
+// Backend API URL
+const API_URL =
+  process.env.REACT_APP_API_URL ||
+  "https://student-management-system-hgsn.onrender.com";
 
 function StudentLogin() {
   const navigate = useNavigate();
@@ -40,7 +44,7 @@ function StudentLogin() {
       setLoading(true);
 
       const response = await fetch(
-        "http://localhost:5000/students/login",
+        `${API_URL}/students/login`,
         {
           method: "POST",
           headers: {
@@ -53,7 +57,8 @@ function StudentLogin() {
         }
       );
 
-      const contentType = response.headers.get("content-type") || "";
+      const contentType =
+        response.headers.get("content-type") || "";
 
       if (!contentType.includes("application/json")) {
         throw new Error(
@@ -64,26 +69,37 @@ function StudentLogin() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || "Student login failed.");
+        throw new Error(
+          data.message || "Student login failed."
+        );
       }
 
       if (!data.token || !data.student) {
-        throw new Error("Student login information is missing.");
+        throw new Error(
+          "Student login information is missing."
+        );
       }
 
       // SAVE STUDENT DETAILS
       localStorage.setItem("studentToken", data.token);
+
       localStorage.setItem(
         "student",
         JSON.stringify(data.student)
       );
 
       // NAVIGATE TO DASHBOARD
-      navigate("/student-dashboard");
+      navigate("/student-dashboard", {
+        replace: true
+      });
 
     } catch (err) {
       console.error("Student login error:", err);
-      setError(err.message);
+
+      setError(
+        err.message || "Unable to connect to the server."
+      );
+
     } finally {
       setLoading(false);
     }
@@ -156,7 +172,9 @@ function StudentLogin() {
             <div className="student-auth-password-wrapper">
 
               <input
-                type={showPassword ? "text" : "password"}
+                type={
+                  showPassword ? "text" : "password"
+                }
                 name="password"
                 placeholder="Enter your password"
                 value={form.password}

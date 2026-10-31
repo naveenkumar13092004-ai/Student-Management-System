@@ -1,17 +1,23 @@
-
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./StudentRegister.css";
+
+// Backend API URL
+const API_URL =
+  process.env.REACT_APP_API_URL ||
+  "https://student-management-system-hgsn.onrender.com";
 
 function StudentRegister() {
   const navigate = useNavigate();
 
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [coursesLoading, setCoursesLoading] = useState(true);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] =
+    useState(false);
 
   const [form, setForm] = useState({
     Id: "",
@@ -30,23 +36,42 @@ function StudentRegister() {
   useEffect(() => {
     const getCourses = async () => {
       try {
+        setCoursesLoading(true);
+        setError("");
+
         const response = await fetch(
-          "http://localhost:5000/courses/public"
+          `${API_URL}/courses/public`
         );
 
-        const data = await response.json();
+        let data = {};
+
+        try {
+          data = await response.json();
+        } catch {
+          data = {};
+        }
 
         if (!response.ok) {
-          throw new Error(data.message || "Unable to load courses");
+          throw new Error(
+            data.message || "Unable to load courses"
+          );
         }
 
         const courseList = Array.isArray(data)
           ? data
           : data.courses || data.data || [];
 
+        if (!Array.isArray(courseList)) {
+          throw new Error("Invalid courses response from server.");
+        }
+
         setCourses(courseList);
+
       } catch (err) {
-        setError(err.message);
+        console.error("Courses loading error:", err);
+        setError(err.message || "Unable to load courses");
+      } finally {
+        setCoursesLoading(false);
       }
     };
 
@@ -70,6 +95,25 @@ function StudentRegister() {
     setError("");
     setSuccess("");
 
+    if (
+      !form.Id.trim() ||
+      !form.name.trim() ||
+      !form.email.trim() ||
+      !form.phone.trim() ||
+      !form.age ||
+      !form.gender ||
+      !form.course ||
+      !form.password
+    ) {
+      setError("Please fill in all required fields.");
+      return;
+    }
+
+    if (Number(form.age) < 1 || Number(form.age) > 120) {
+      setError("Please enter a valid age.");
+      return;
+    }
+
     if (form.password.length < 8) {
       setError("Password must contain at least 8 characters.");
       return;
@@ -84,7 +128,7 @@ function StudentRegister() {
       setLoading(true);
 
       const response = await fetch(
-        "http://localhost:5000/students/register",
+        `${API_URL}/students/register`,
         {
           method: "POST",
           headers: {
@@ -93,7 +137,7 @@ function StudentRegister() {
           body: JSON.stringify({
             Id: form.Id.trim(),
             name: form.name.trim(),
-            email: form.email.trim(),
+            email: form.email.trim().toLowerCase(),
             phone: form.phone.trim(),
             age: Number(form.age),
             gender: form.gender,
@@ -104,10 +148,18 @@ function StudentRegister() {
         }
       );
 
-      const data = await response.json();
+      let data = {};
+
+      try {
+        data = await response.json();
+      } catch {
+        data = {};
+      }
 
       if (!response.ok) {
-        throw new Error(data.message || "Student registration failed.");
+        throw new Error(
+          data.message || "Student registration failed."
+        );
       }
 
       setSuccess("Registration successful! Please login.");
@@ -130,7 +182,10 @@ function StudentRegister() {
       }, 1500);
 
     } catch (err) {
-      setError(err.message);
+      console.error("Student registration error:", err);
+      setError(
+        err.message || "Unable to connect to the server."
+      );
     } finally {
       setLoading(false);
     }
@@ -148,17 +203,25 @@ function StudentRegister() {
         <div className="register-icon">🎓</div>
 
         <div className="register-heading">
-          <p className="register-eyebrow">STUDENT PORTAL</p>
+          <p className="register-eyebrow">
+            STUDENT PORTAL
+          </p>
+
           <h1>Create Student Account</h1>
-          <p>Enter your details to create your account.</p>
+
+          <p>
+            Enter your details to create your account.
+          </p>
         </div>
 
+        {/* ERROR MESSAGE */}
         {error && (
           <div className="register-error">
             {error}
           </div>
         )}
 
+        {/* SUCCESS MESSAGE */}
         {success && (
           <div className="register-success">
             {success}
@@ -169,8 +232,12 @@ function StudentRegister() {
 
           <div className="register-form-grid">
 
+            {/* STUDENT ID */}
             <div className="register-field">
-              <label>Student ID <span>*</span></label>
+              <label>
+                Student ID <span>*</span>
+              </label>
+
               <input
                 type="text"
                 name="Id"
@@ -181,8 +248,12 @@ function StudentRegister() {
               />
             </div>
 
+            {/* FULL NAME */}
             <div className="register-field">
-              <label>Full Name <span>*</span></label>
+              <label>
+                Full Name <span>*</span>
+              </label>
+
               <input
                 type="text"
                 name="name"
@@ -193,8 +264,12 @@ function StudentRegister() {
               />
             </div>
 
+            {/* EMAIL */}
             <div className="register-field">
-              <label>Email Address <span>*</span></label>
+              <label>
+                Email Address <span>*</span>
+              </label>
+
               <input
                 type="email"
                 name="email"
@@ -205,8 +280,12 @@ function StudentRegister() {
               />
             </div>
 
+            {/* PHONE */}
             <div className="register-field">
-              <label>Phone Number <span>*</span></label>
+              <label>
+                Phone Number <span>*</span>
+              </label>
+
               <input
                 type="tel"
                 name="phone"
@@ -217,8 +296,12 @@ function StudentRegister() {
               />
             </div>
 
+            {/* AGE */}
             <div className="register-field">
-              <label>Age <span>*</span></label>
+              <label>
+                Age <span>*</span>
+              </label>
+
               <input
                 type="number"
                 name="age"
@@ -231,30 +314,56 @@ function StudentRegister() {
               />
             </div>
 
+            {/* GENDER */}
             <div className="register-field">
-              <label>Gender <span>*</span></label>
+              <label>
+                Gender <span>*</span>
+              </label>
+
               <select
                 name="gender"
                 value={form.gender}
                 onChange={handleChange}
                 required
               >
-                <option value="">Select Gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Other">Other</option>
+                <option value="">
+                  Select Gender
+                </option>
+
+                <option value="Male">
+                  Male
+                </option>
+
+                <option value="Female">
+                  Female
+                </option>
+
+                <option value="Other">
+                  Other
+                </option>
               </select>
             </div>
 
+            {/* COURSE */}
             <div className="register-field full-width">
-              <label>Course <span>*</span></label>
+              <label>
+                Course <span>*</span>
+              </label>
+
               <select
                 name="course"
                 value={form.course}
                 onChange={handleChange}
                 required
+                disabled={coursesLoading || courses.length === 0}
               >
-                <option value="">Select Course</option>
+                <option value="">
+                  {coursesLoading
+                    ? "Loading courses..."
+                    : courses.length === 0
+                    ? "No courses available"
+                    : "Select Course"}
+                </option>
 
                 {courses.map((course) => (
                   <option
@@ -267,8 +376,10 @@ function StudentRegister() {
               </select>
             </div>
 
+            {/* ADDRESS */}
             <div className="register-field full-width">
               <label>Address</label>
+
               <textarea
                 name="address"
                 placeholder="Enter your address"
@@ -278,8 +389,12 @@ function StudentRegister() {
               />
             </div>
 
+            {/* PASSWORD */}
             <div className="register-field">
-              <label>Password <span>*</span></label>
+              <label>
+                Password <span>*</span>
+              </label>
+
               <div className="register-password-wrapper">
                 <input
                   type={showPassword ? "text" : "password"}
@@ -290,30 +405,42 @@ function StudentRegister() {
                   minLength="8"
                   required
                 />
+
                 <button
                   type="button"
-                  onClick={() => setShowPassword(!showPassword)}
+                  onClick={() =>
+                    setShowPassword(!showPassword)
+                  }
                 >
                   {showPassword ? "Hide" : "Show"}
                 </button>
               </div>
             </div>
 
+            {/* CONFIRM PASSWORD */}
             <div className="register-field">
-              <label>Confirm Password <span>*</span></label>
+              <label>
+                Confirm Password <span>*</span>
+              </label>
+
               <div className="register-password-wrapper">
                 <input
-                  type={showConfirmPassword ? "text" : "password"}
+                  type={
+                    showConfirmPassword ? "text" : "password"
+                  }
                   name="confirmPassword"
                   placeholder="Re-enter your password"
                   value={form.confirmPassword}
                   onChange={handleChange}
                   required
                 />
+
                 <button
                   type="button"
                   onClick={() =>
-                    setShowConfirmPassword(!showConfirmPassword)
+                    setShowConfirmPassword(
+                      !showConfirmPassword
+                    )
                   }
                 >
                   {showConfirmPassword ? "Hide" : "Show"}
@@ -323,19 +450,23 @@ function StudentRegister() {
 
           </div>
 
+          {/* REGISTER BUTTON */}
           <button
             type="submit"
             className="register-submit-btn"
-            disabled={loading}
+            disabled={loading || coursesLoading || courses.length === 0}
           >
             {loading ? "Registering..." : "Register →"}
           </button>
 
         </form>
 
+        {/* LOGIN LINK */}
         <p className="register-login-link">
           Already have an account?
-          <Link to="/student-login"> Login here</Link>
+          <Link to="/student-login">
+            {" "}Login here
+          </Link>
         </p>
 
       </div>

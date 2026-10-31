@@ -1,6 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Students.css";
+
+const API_URL =
+  process.env.REACT_APP_API_URL ||
+  "https://student-management-system-hgsn.onrender.com";
 
 function Students() {
   const navigate = useNavigate();
@@ -12,15 +16,20 @@ function Students() {
   const [error, setError] = useState("");
 
   // Get all students
-  const getStudents = async () => {
+  const getStudents = useCallback(async () => {
     try {
       setLoading(true);
       setError("");
 
       const token = localStorage.getItem("token");
 
+      if (!token) {
+        navigate("/login");
+        return;
+      }
+
       const response = await fetch(
-        "http://localhost:5000/students",
+        `${API_URL}/students`,
         {
           method: "GET",
           headers: {
@@ -30,24 +39,41 @@ function Students() {
         }
       );
 
-      const data = await response.json();
+      let data = {};
 
-      if (!response.ok) {
-        throw new Error(data.message || "Unable to fetch students");
+      try {
+        data = await response.json();
+      } catch {
+        data = {};
       }
 
-      setStudents(Array.isArray(data.data) ? data.data : []);
+      if (!response.ok) {
+        throw new Error(
+          data.message || "Unable to fetch students"
+        );
+      }
+
+      const studentList = Array.isArray(data)
+        ? data
+        : Array.isArray(data.data)
+        ? data.data
+        : Array.isArray(data.students)
+        ? data.students
+        : [];
+
+      setStudents(studentList);
+
     } catch (err) {
       console.error("Get Students Error:", err);
       setError(err.message || "Something went wrong.");
     } finally {
       setLoading(false);
     }
-  };
+  }, [navigate]);
 
   useEffect(() => {
     getStudents();
-  }, []);
+  }, [getStudents]);
 
   // Delete student
   const deleteStudent = async (id) => {
@@ -60,8 +86,13 @@ function Students() {
     try {
       const token = localStorage.getItem("token");
 
+      if (!token) {
+        navigate("/login");
+        return;
+      }
+
       const response = await fetch(
-        `http://localhost:5000/students/${id}`,
+        `${API_URL}/students/${id}`,
         {
           method: "DELETE",
           headers: {
@@ -71,14 +102,24 @@ function Students() {
         }
       );
 
-      const data = await response.json();
+      let data = {};
+
+      try {
+        data = await response.json();
+      } catch {
+        data = {};
+      }
 
       if (!response.ok) {
-        throw new Error(data.message || "Unable to delete student");
+        throw new Error(
+          data.message || "Unable to delete student"
+        );
       }
 
       setStudents((previousStudents) =>
-        previousStudents.filter((student) => student._id !== id)
+        previousStudents.filter(
+          (student) => student._id !== id
+        )
       );
 
       if (selectedStudent?._id === id) {
@@ -86,6 +127,7 @@ function Students() {
       }
 
       alert("Student deleted successfully!");
+
     } catch (err) {
       console.error("Delete Student Error:", err);
       alert(err.message || "Unable to delete student.");
@@ -111,11 +153,15 @@ function Students() {
       {/* Page Header */}
       <div className="students-header">
         <div>
-          <p className="section-eyebrow">ADMIN MANAGEMENT</p>
+          <p className="section-eyebrow">
+            ADMIN MANAGEMENT
+          </p>
 
           <h1>Students Management</h1>
 
-          <p>View and manage all registered students.</p>
+          <p>
+            View and manage all registered students.
+          </p>
         </div>
 
         <div className="total-students-card">
@@ -221,7 +267,10 @@ function Students() {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="7" style={{ textAlign: "center" }}>
+                    <td
+                      colSpan="7"
+                      style={{ textAlign: "center" }}
+                    >
                       No students found.
                     </td>
                   </tr>

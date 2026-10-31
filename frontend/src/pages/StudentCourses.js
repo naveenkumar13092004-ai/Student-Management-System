@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import apiRequest from "../services/api";
 import "./StudentCourses.css";
 
 function StudentCourses() {
@@ -14,17 +15,11 @@ function StudentCourses() {
   useEffect(() => {
     const getCourses = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:5000/courses/public"
-        );
+        setLoading(true);
+        setError("");
 
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(
-            data.message || "Unable to load courses."
-          );
-        }
+        // Load courses from the deployed backend
+        const data = await apiRequest("/courses/public");
 
         const courseList = Array.isArray(data)
           ? data
@@ -33,7 +28,8 @@ function StudentCourses() {
         setCourses(courseList);
 
       } catch (err) {
-        setError(err.message);
+        console.error("Get Courses Error:", err);
+        setError(err.message || "Unable to load courses.");
       } finally {
         setLoading(false);
       }
@@ -116,17 +112,11 @@ function StudentCourses() {
                           {course.name || "—"}
                         </td>
 
-                        <td>
-                          {course.code || "—"}
-                        </td>
+                        <td>{course.code || "—"}</td>
 
-                        <td>
-                          {course.description || "—"}
-                        </td>
+                        <td>{course.description || "—"}</td>
 
-                        <td>
-                          {course.duration || "—"}
-                        </td>
+                        <td>{course.duration || "—"}</td>
 
                         <td className="course-fees">
                           ₹
@@ -152,7 +142,7 @@ function StudentCourses() {
 
         </section>
 
-        {/* BACK TO DASHBOARD BUTTON - PAGE BOTTOM */}
+        {/* BACK TO DASHBOARD BUTTON */}
         <div className="back-dashboard-container">
           <button
             type="button"
